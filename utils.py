@@ -1,5 +1,7 @@
 import cv2
 
+import yt_dlp
+
 import numpy as np
 
 from PIL import ImageFont, ImageDraw, Image
@@ -67,3 +69,25 @@ class Utils :
         img_cv = Utils.to_opencv(img_pil)
 
         return img_cv
+
+    # 유튜브 최고화질
+    @staticmethod
+    def get_best_video(youtube_url):
+        # 최고 화질
+        ydl_opts = {'format': 'best'}
+
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+
+                # download :
+                #   True : 실제로 파일 저장
+                #   False : 정보만 가져옴
+                info = ydl.extract_info(youtube_url, download=False)
+
+                return info['url']
+
+        except Exception as e:
+
+            print(e)
+
+            return None
