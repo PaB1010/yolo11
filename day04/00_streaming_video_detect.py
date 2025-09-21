@@ -11,7 +11,7 @@ youtube_url = "https://youtu.be/P4F2dxSEDLE"
 
 streaming_url = Utils.get_best_video(youtube_url)
 
-output_path = "E:/[공부]/opencv/muhan_x.mp4"
+output_path = "E:/study/opencv/muhan_x.mp4"
 
 font_path = "C:/Windows/Fonts/NanumGothic.ttf"
 

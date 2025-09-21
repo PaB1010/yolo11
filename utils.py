@@ -70,6 +70,36 @@ class Utils :
 
         return img_cv
 
+    # 마스크+텍스트 그리기 함수
+    @staticmethod
+    def text_mask_pil(img, text, points, mask_color, opacity, text_start, font_path, font_size, font_color) :
+
+        # 마스크 그리기
+        overlay = img.copy()
+
+        cv2.fillPoly(overlay, [points], mask_color)
+
+        img_mask = cv2.addWeighted(img, 1 - opacity, overlay, opacity, 0)
+
+        # 마스크 이미지 위에 텍스트 그리기
+        img_pil = Image.fromarray(cv2.cvtColor(img_mask, cv2.COLOR_BGR2RGB))
+
+        draw = ImageDraw.Draw(img_pil)
+
+        font = ImageFont.truetype(font_path, font_size)
+
+        # 텍스트 위치
+        text_x = text_start[0]
+
+        text_y = text_start[1] - font_size - 5
+
+        if text_y < 0:
+            text_y = text_start[1] + 5
+
+        draw.text((text_x, text_y), text, font=font, fill=font_color)
+
+        return cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
+
     # 유튜브 최고화질
     @staticmethod
     def get_best_video(youtube_url):
